@@ -1,0 +1,366 @@
+openapi: 3.0.1
+paths:
+  /analytics:
+    get:
+      responses:
+        "200":
+          description: Records fetched successfully.
+      summary: List all the events
+      operationId: get_analytics_list
+      parameters:
+        - description: Name of the event
+          in: query
+          example: USER_LOGIN
+          name: event_name
+          schema:
+            type: string
+      tags:
+        - analytics
+    post:
+      responses:
+        "201":
+          description: Event recorded successfully.
+      summary: Add new Event
+      operationId: Record New event
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/analytics"
+        required: true
+      tags:
+        - analytics
+  /health:
+    get:
+      responses:
+        "200":
+          description: Success
+      operationId: get_health_endpoint
+      tags:
+        - default
+  /user_workflows/:
+    get:
+      responses:
+        "500":
+          description: Internal Server Error
+      summary: List all the user_workflows
+      operationId: get_user_workflows
+      tags:
+        - user_workflows
+    post:
+      responses:
+        "201":
+          description: New record created successfully.
+      summary: Create a new user_workflows
+      operationId: post_user_workflows
+      requestBody:
+        $ref: "#/components/requestBodies/user_workflows"
+      tags:
+        - user_workflows
+  "/user_workflows/{id}":
+    parameters:
+      - in: path
+        description: UserWorkflows type identifier
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      responses:
+        "200":
+          description: Success
+      summary: Get details of an existing user_workflows
+      operationId: get_user_workflows_list
+      tags:
+        - user_workflows
+    put:
+      responses:
+        "200":
+          description: Success
+      summary: Update an existing user_workflows
+      operationId: put_user_workflows_list
+      requestBody:
+        $ref: "#/components/requestBodies/user_workflows"
+      tags:
+        - user_workflows
+    delete:
+      responses:
+        "200":
+          description: Success
+      summary: Delete an existing user_workflows
+      operationId: delete_user_workflows_list
+      tags:
+        - user_workflows
+  /users/:
+    get:
+      responses:
+        "500":
+          description: Internal Server Error
+      summary: List all the users
+      operationId: get_users
+      tags:
+        - users
+    post:
+      responses:
+        "201":
+          description: New record created successfully.
+      summary: Create a new users
+      operationId: post_users
+      requestBody:
+        $ref: "#/components/requestBodies/users"
+      tags:
+        - users
+  /users/login:
+    post:
+      responses:
+        "200":
+          description: Success
+      summary: API for user login
+      operationId: post_users_login
+      requestBody:
+        $ref: "#/components/requestBodies/users"
+      tags:
+        - users
+  /users/logout:
+    get:
+      responses:
+        "200":
+          description: Success
+      summary: Logout API to invalidate token
+      operationId: get_users_logout
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      tags:
+        - users
+  "/users/{id}":
+    parameters:
+      - in: path
+        description: Users type identifier
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      responses:
+        "200":
+          description: Success
+      summary: Get details of an existing users
+      operationId: get_users_list
+      tags:
+        - users
+    put:
+      responses:
+        "200":
+          description: Success
+      summary: Update an existing users
+      operationId: put_users_list
+      requestBody:
+        $ref: "#/components/requestBodies/users"
+      tags:
+        - users
+    delete:
+      responses:
+        "200":
+          description: Success
+      summary: Delete an existing users
+      operationId: delete_users_list
+      tags:
+        - users
+  /workflows/:
+    get:
+      responses:
+        "500":
+          description: Internal Server Error
+      summary: List all the workflows
+      operationId: get_workflows
+      tags:
+        - workflows
+    post:
+      responses:
+        "201":
+          description: New record created successfully.
+      summary: Create a new workflows
+      operationId: post_workflows
+      requestBody:
+        $ref: "#/components/requestBodies/workflows"
+      tags:
+        - workflows
+  "/workflows/{id}":
+    parameters:
+      - in: path
+        description: Workflows type identifier
+        name: id
+        required: true
+        schema:
+          type: integer
+    get:
+      responses:
+        "200":
+          description: Success
+      summary: Get details of an existing workflows
+      operationId: get_workflows_list
+      tags:
+        - workflows
+    put:
+      responses:
+        "200":
+          description: Success
+      summary: Update an existing workflows
+      operationId: put_workflows_list
+      requestBody:
+        $ref: "#/components/requestBodies/workflows"
+      tags:
+        - workflows
+    delete:
+      responses:
+        "200":
+          description: Success
+      summary: Delete an existing workflows
+      operationId: delete_workflows_list
+      tags:
+        - workflows
+tags:
+  - name: Data Collection App
+    description: Purina data collection app
+info:
+  title: Data collection App
+  version: "1.0"
+  description: App Description
+  x-app-name: app_name
+  x-api-repo: https://git.cglcloud.com/
+  x-policy-repo: https://git.cglcloud.com/
+  x-team-name: ilc
+  x-owner: 
+    name: AakanshuGupta
+    email: aakanshu_gupta@cargill.com
+    url: https://git.cglcloud.com/{AakanshuGupta}
+  contact:
+    name: AakanshuGupta
+    email: aakanshu_gupta@cargill.com
+    url: https://git.cglcloud.com/{AakanshuGupta}
+servers:
+  - url: https://dcapi.dev.dev-cglcloud.com
+  - url: https://api-dev.dev.dev-cglcloud.com
+  - url: https:///api-stage.stage.cglcloud.in
+  - url: https://api.cglcloud.com
+components:
+  responses:
+    ParseError:
+      description: When a mask can't be parsed
+    MaskError:
+      description: When any error occurs on mask
+  requestBodies:
+    workflows:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/workflows"
+      required: true
+    users:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/users"
+      required: true
+    user_workflows:
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/user_workflows"
+      required: true
+  schemas:
+    users:
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: user email address
+          example: admin@cargill.com
+        password:
+          type: string
+          description: user password
+          example: admin123
+      type: object
+    analytics:
+      required:
+        - event_name
+      properties:
+        event_name:
+          type: string
+          description: Name of the event for which data is recorded
+          example: USER_LOGIN
+        user_data:
+          type: object
+          description: A json object stored as string to pass all the related information
+          example:
+            data: something
+        device_info:
+          type: object
+          description: A json object to store the device info
+          example:
+            device: mobile
+            browser: Chrome 80
+        network_info:
+          type: object
+          description: A json object to store the network info
+          example:
+            network: 3G
+      type: object
+    workflows:
+      required:
+        - en
+        - ru
+      properties:
+        en:
+          type: object
+          description: English language details
+          example:
+            name: Test workflow
+            description: Some help text about workflow
+            description_image: ""
+        ru:
+          type: object
+          description: Language
+          example:
+            name: Рабочий процесс тестирования
+            description: Некоторая справка о рабочем процессе
+            description_image: ""
+      type: object
+    user_workflows:
+      required:
+        - user_id
+        - workflow_id
+      properties:
+        user_id:
+          type: integer
+          description: User Id to whom workflow has to be assigned
+          example: 2
+        workflow_id:
+          type: integer
+          description: Workflow Id
+          example: 3
+        times:
+          type: integer
+          description: No. of times we has to complete workflow
+          example: 1
+        completed:
+          type: integer
+          description: No of workflows completed
+      type: object
+  securitySchemes:
+    bearerAuth:
+      type: http
+      name: bearerAuth
+      $ref: "#/components/securitySchemes"
+      scheme: bearer
+      bearerFormat: JWT
+      flows:
+      openIdConnectUrl: https://cargillcustomer-qa.oktapreview.com/oauth2/aushb5mlqe4IiZu3k0h7/.well-known/oauth-authorization-server
+security:
+  - bearerAuth: []

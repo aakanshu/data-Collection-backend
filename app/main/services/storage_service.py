@@ -1,10 +1,10 @@
 import os
 import boto3
 from botocore.exceptions import ClientError
-from datetime import date
+from datetime import datetime
 from app.main import logger
-# BUCKET_NAME = os.getenv("BUCKET_NAME") #'terraform-20210416111327492600000001'
-BUCKET_NAME = 'terraform-20210416111327492600000001'
+BUCKET_NAME = os.getenv("BUCKET_NAME") #'terraform-20210416111327492600000001'
+# BUCKET_NAME = 'terraform-20210416111327492600000001'
 
 def _get_s3_client():
     return boto3.client(
@@ -24,7 +24,7 @@ def _get_s3_resource():
 
 def upload_file(file):
     logger.info("File API called")
-    object_name = str(date.today()) + "/" + file.filename.replace(" ", "").split('/')[-1]
+    object_name = datetime.now().year + "/" + datetime.now().month + "/" + datetime.now().day + "/" + file.filename.replace(" ", "").split('/')[-1]
     # Upload the file
     try:
         s3 = _get_s3_client()
